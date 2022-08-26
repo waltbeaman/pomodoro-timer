@@ -13,10 +13,11 @@ class Program
 
     static void Main()
     {
-        Console.SetWindowSize(58, 25);
+        Console.SetWindowSize(58, 20);
         Console.Title = "Pomodoro Timer";
 
         // Create timer variables
+        // 25 minutes work time and 5 minutes task time
         int taskTime = 1500000;
         int breakTime = 300000;
 
