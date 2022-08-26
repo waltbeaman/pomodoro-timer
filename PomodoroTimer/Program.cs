@@ -1,6 +1,16 @@
 ﻿namespace PomodoroTimer;
 class Program
 {
+
+    public enum Menu
+    {
+        TaskTime,
+        StartTask,
+        BreakTime,
+        StartBreak,
+        Alarm
+    }
+
     static void Main()
     {
         Console.SetWindowSize(58, 25);
@@ -19,15 +29,26 @@ class Program
             while (!Console.KeyAvailable)
             {
                 Console.BackgroundColor = ConsoleColor.Black;
-                GenerateBanner(1);
+                Console.ForegroundColor = ConsoleColor.Green;
+
+                // Ask user to start task and load task timer
+                GenerateBanner(Menu.StartTask);
                 Console.ReadKey();
-                Thread.Sleep(taskTime);
+
+                // Start the task timer
+                StartTask(taskTime);
+
+                // Start the alarm
                 StartAlarm();
 
+                // Ask user to start break and load break timer
                 Console.BackgroundColor = ConsoleColor.Black;
-                GenerateBanner(2);
+                Console.ForegroundColor = ConsoleColor.Green;
+                GenerateBanner(Menu.StartBreak);
                 Console.ReadKey();
-                Thread.Sleep(breakTime);
+                StartBreak(breakTime);
+
+                // Start the alarm
                 StartAlarm();
             }
 
@@ -36,7 +57,51 @@ class Program
         Environment.Exit(0); 
     }
 
-    public static void GenerateBanner(int menu)
+    public static void StartTask(int taskTime)
+    {
+        GenerateBanner(Menu.TaskTime);
+        int clock = taskTime;
+        int interval = taskTime / 58;
+        while (clock > 0)
+        {
+            Console.Write("█");
+            Thread.Sleep(interval);
+            clock -= interval;
+        }
+    }
+
+    public static void StartBreak(int breakTime)
+    {
+        GenerateBanner(Menu.BreakTime);
+        int clock = breakTime;
+        int interval = breakTime / 58;
+        while (clock > 0)
+        {
+            Console.Write("█");
+            Thread.Sleep(interval);
+            clock -= interval;
+        }
+    }
+
+    public static void StartAlarm()
+    {
+        Console.BackgroundColor = ConsoleColor.Red;
+        Console.ForegroundColor = ConsoleColor.Black;
+        GenerateBanner(Menu.Alarm);
+        
+        do
+        {
+            while (!Console.KeyAvailable)
+            {
+                Console.Beep();
+                Thread.Sleep(500);
+                Console.Write("█");
+            }
+
+        } while (Console.ReadKey(true).Key != ConsoleKey.Spacebar && Console.ReadKey(true).Key != ConsoleKey.Escape);
+    }
+
+    public static void GenerateBanner(Enum menu)
     {
         Console.Clear();
         Console.Write(@"
@@ -59,8 +124,16 @@ class Program
  ║        PRESS THE SPACEBAR TO START THE TASK          ║
  ╚══════════════════════════════════════════════════════╝
 ";
+        string taskTime = @"
+ ║                     TASK TIME                        ║
+ ╚══════════════════════════════════════════════════════╝
+";
         string startBreak = @"
  ║        PRESS THE SPACEBAR TO START THE BREAK         ║
+ ╚══════════════════════════════════════════════════════╝
+";
+        string breakTime = @"
+ ║                     BREAK TIME                       ║
  ╚══════════════════════════════════════════════════════╝
 ";
         string silenceAlarm = @"
@@ -69,47 +142,23 @@ class Program
 ";
         switch (menu)
         {
-            case 1:
+            case Menu.StartTask:
                 Console.Write(startTask);
                 break;
-            case 2:
+            case Menu.TaskTime:
+                Console.Write(taskTime);
+                break;
+            case Menu.StartBreak:
                 Console.Write(startBreak);
                 break;
-            default:
+            case Menu.BreakTime:
+                Console.Write(breakTime);
+                break;
+            case Menu.Alarm:
                 Console.Write(silenceAlarm);
                 break;
         }
-        
-    }
 
-    public static void StartTask(int taskTime)
-    {
-        GenerateBanner(1);
-        Console.ReadKey();
-        Thread.Sleep(taskTime);
-    }
-
-    public static void StartBreak(int breakTime)
-    {
-        GenerateBanner(2);
-        Console.ReadKey();
-        Thread.Sleep(breakTime);
-    }
-
-    public static void StartAlarm()
-    {
-        GenerateBanner(3);
-        Console.BackgroundColor = ConsoleColor.Yellow;
-        do
-        {
-            while (!Console.KeyAvailable)
-            {
-                Console.Beep();
-                Thread.Sleep(500);
-                Console.Write("█");
-            }
-
-        } while (Console.ReadKey(true).Key != ConsoleKey.Spacebar && Console.ReadKey(true).Key != ConsoleKey.Escape);
     }
 
 }
