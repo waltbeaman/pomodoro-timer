@@ -14,6 +14,7 @@ class Program
     static void Main()
     {
         Console.SetWindowSize(58, 20);
+        Console.SetBufferSize(58, 20);
         Console.Title = "Pomodoro Timer";
 
         // Create timer variables
@@ -29,8 +30,7 @@ class Program
         {
             while (!Console.KeyAvailable)
             {
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ResetColor();
 
                 // Ask user to start task and load task timer
                 GenerateBanner(Menu.StartTask);
@@ -43,8 +43,7 @@ class Program
                 StartAlarm();
 
                 // Ask user to start break and load break timer
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ResetColor();
                 GenerateBanner(Menu.StartBreak);
                 Console.ReadKey();
                 StartBreak(breakTime);
@@ -66,7 +65,7 @@ class Program
         while (clock > 0)
         {
             Console.Write("█");
-            Thread.Sleep(interval);
+            new ManualResetEvent(false).WaitOne(interval);
             clock -= interval;
         }
     }
@@ -79,26 +78,27 @@ class Program
         while (clock > 0)
         {
             Console.Write("█");
-            Thread.Sleep(interval);
+            new ManualResetEvent(false).WaitOne(interval);
             clock -= interval;
         }
     }
 
     public static void StartAlarm()
     {
-        Console.BackgroundColor = ConsoleColor.Red;
-        Console.ForegroundColor = ConsoleColor.Black;
-        GenerateBanner(Menu.Alarm);
-        
         do
         {
             while (!Console.KeyAvailable)
             {
+                Console.ResetColor();
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Black;
+                GenerateBanner(Menu.Alarm);
                 Console.Beep();
-                Thread.Sleep(500);
-                Console.Write("█");
+                new ManualResetEvent(false).WaitOne(250);
+                Console.ResetColor();
+                GenerateBanner(Menu.Alarm);
+                new ManualResetEvent(false).WaitOne(250);
             }
-
         } while (Console.ReadKey(true).Key != ConsoleKey.Spacebar && Console.ReadKey(true).Key != ConsoleKey.Escape);
     }
 
