@@ -18,7 +18,7 @@ class Program
         Console.Title = "Pomodoro Timer";
 
         // Create timer variables
-        // 25 minutes work time and 5 minutes task time
+        // 25 minutes task time and 5 minutes break time
         int taskTime = 1500000;
         int breakTime = 300000;
 
@@ -124,21 +124,21 @@ class Program
  ╟──────────────────────────────────────────────────────╢");
 
         string startTask = @"
- ║        PRESS THE SPACEBAR TO START THE TASK          ║
+ ║      PRESS THE SPACEBAR TO START THE TASK TIMER      ║
  ╚══════════════════════════════════════════════════════╝
 ";
         string taskTime = @"
- ║                     TASK TIME                        ║
+ ║               ***** TASK TIME *****                  ║
  ╟──────────────────────────────────────────────────────╢
  ║                                                      ║
  ╚══════════════════════════════════════════════════════╝
 ";
         string startBreak = @"
- ║        PRESS THE SPACEBAR TO START THE BREAK         ║
+ ║     PRESS THE SPACEBAR TO START THE BREAK TIMER      ║
  ╚══════════════════════════════════════════════════════╝
 ";
         string breakTime = @"
- ║                     BREAK TIME                       ║
+ ║               ~~~~~ BREAK TIME ~~~~~                 ║
  ╟──────────────────────────────────────────────────────╢
  ║                                                      ║
  ╚══════════════════════════════════════════════════════╝
