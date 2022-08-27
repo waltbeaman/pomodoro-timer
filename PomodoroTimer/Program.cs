@@ -60,8 +60,9 @@ class Program
     public static void StartTask(int taskTime)
     {
         GenerateBanner(Menu.TaskTime);
+        Console.SetCursorPosition(2, 17);
         int clock = taskTime;
-        int interval = taskTime / 58;
+        int interval = taskTime / 53;
         while (clock > 0)
         {
             Console.Write("█");
@@ -73,8 +74,9 @@ class Program
     public static void StartBreak(int breakTime)
     {
         GenerateBanner(Menu.BreakTime);
+        Console.SetCursorPosition(2, 17);
         int clock = breakTime;
-        int interval = breakTime / 58;
+        int interval = breakTime / 53;
         while (clock > 0)
         {
             Console.Write("█");
@@ -127,6 +129,8 @@ class Program
 ";
         string taskTime = @"
  ║                     TASK TIME                        ║
+ ╟──────────────────────────────────────────────────────╢
+ ║                                                      ║
  ╚══════════════════════════════════════════════════════╝
 ";
         string startBreak = @"
@@ -135,6 +139,8 @@ class Program
 ";
         string breakTime = @"
  ║                     BREAK TIME                       ║
+ ╟──────────────────────────────────────────────────────╢
+ ║                                                      ║
  ╚══════════════════════════════════════════════════════╝
 ";
         string silenceAlarm = @"
